@@ -1,0 +1,106 @@
+NOTA: LAS PREGUNTAS 15 Y 25 ESTABAN REPETIDAS
+
+1. ¿Qué es Next.js y por qué se dice que es el framework de React más popular?
+Next.js es un framework de React que permite construir aplicaciones web con renderizado del lado del servidor (SSR), generación de sitios estáticos (SSG) y renderizado del lado del cliente (CSR). Es el más popular porque simplifica tareas complejas como el enrutamiento, la optimización de imágenes, el manejo de fuentes y la mejora del rendimiento, además de tener una gran comunidad y el respaldo de Vercel.
+
+2. ¿Cuál es el comando exacto con npx para inicializar un proyecto de Next.js asegurando usar la última versión?
+`npx create-next-app@latest nombre-del-proyecto`
+
+3. ¿Cuál es el comando utilizado para levantar el entorno de desarrollo y en qué puerto se ejecuta por defecto?
+`npm run dev` y por defecto se ejecuta en el puerto `3000`.
+
+4. ¿Qué función cumple el comando npm run build en un proyecto de Next.js?
+Construye la aplicación para producción, optimizando el código, generando las rutas estáticas y preparando los archivos necesarios para desplegar la aplicación.
+
+5. Describe para que sirven las carpetas public y app
+- `public`: Contiene archivos estáticos como imágenes, fuentes o íconos que se sirven directamente al navegador.
+- `app`: Es la carpeta principal donde se definen las rutas, layouts, páginas y componentes usando el sistema de enrutamiento basado en archivos (App Router).
+
+6. ¿Que es un CSS MODULE y como se usan?
+Un CSS Module es un archivo CSS que encapsula los estilos, evitando conflictos de nombres. Se usa importándolo directamente en un componente de React, y las clases se aplican como propiedades del objeto importado. Ejemplo: `import styles from './Componente.module.css'` y luego `className={styles.miClase}`.
+
+7. ¿Que hace el componente Layout.tsx ?
+Define una estructura de interfaz de usuario que se comparte entre múltiples páginas. Por ejemplo, un layout de dashboard puede contener un menú lateral y un área de contenido dinámico (`{children}`).
+
+8. ¿Que es el enrutamiento ?
+Es el mecanismo que permite asociar una URL a un componente específico de la interfaz, definiendo qué se muestra al usuario cuando accede a diferentes rutas de la aplicación.
+
+9. ¿Cual es la diferencia entre Image e img?
+`Image` es un componente de Next.js que optimiza imágenes automáticamente (cambio de formato, lazy loading, reducción de tamaño), mientras que `img` es la etiqueta HTML estándar que no incluye optimizaciones por defecto.
+
+10. ¿Que es el Lazy Load?
+Es una técnica que retrasa la carga de recursos (como imágenes o componentes) hasta que sean necesarios, por ejemplo, cuando están a punto de entrar en el viewport del navegador, mejorando el rendimiento inicial.
+
+11 Cual es el funcionamiento del siguiente codigo, en que momento se muestra cada imagen
+
+La primer parte del codigo hace lo siguiente:
+
+src='/hero-desktop.png': Carga la imagen para escritorio
+
+width={1000} y height={760}: Define dimensiones reales de la imagen (para evitar layout shift)
+
+className='hidden md:block': Regla responsive:
+
+En pantallas pequeñas (mobile): hidden:la imagen NO se muestra
+
+En pantallas medianas o mayores (md: ≥768px): block: la imagen SÍ se muestra
+
+
+La segunda parte del codigo hace lo siguiente:
+
+src='/hero-mobile.png' → Carga la imagen para móviles
+
+width={560} y height={620} → Dimensiones optimizadas para mobile
+
+className='block md:hidden' → Regla responsive inversa:
+
+En pantallas pequeñas (mobile): block → la imagen SÍ se muestra
+
+En pantallas medianas o mayores (md: ≥768px): hidden → la imagen NO se muestra
+
+12. ¿Como funciona el enrutamiento en Next JS ?
+Next.js usa un sistema de enrutamiento basado en archivos: cada carpeta dentro de `app` representa un segmento de la URL, y los archivos `page.tsx` exponen una ruta accesible. Por ejemplo, `app/dashboard/page.tsx` genera la ruta `/dashboard`.
+
+13. ¿Que es una ruta en el contexto web y donde las hemos visto en la clase ?
+Una ruta es una dirección URL que permite acceder a un recurso o página específica dentro de una aplicación web. En la clase las vimos al navegar en una pagina web.
+
+14. ¿Que arrojo a MiduDev el localhost:300/dashboard, donde hemos visto esos errores en la clase ?
+Error 404 si la ruta no existe, o errores de sintaxis al crear los archivos. En la clase los errores se vieron al intentar acceder a las rutas en una web.
+
+16. ¿Que es el File System Routing?
+Es el sistema de enrutamiento de Next.js donde las rutas se definen mediante la estructura de carpetas y archivos dentro de la carpeta `app`, sin necesidad de configurar manualmente un archivo de rutas.
+
+17. ¿Como funcionan las rutas anidadas?
+Las rutas anidadas se crean colocando carpetas dentro de otras carpetas. Por ejemplo, `app/dashboard/customers/page.tsx` genera la ruta `/dashboard/customers`. Cada nivel puede tener su propio `layout.tsx` que envuelve a los niveles inferiores.
+
+18 ¿Investiga por que es necesario esto ?
+
+Next.js requiere que los archivos page.tsx y layout.tsx exporten por defecto un componente. Sin esto, la ruta no funcionaría.
+
+export default es el mecanismo que usa Next.js para identificar qué componente debe renderizar en una ruta específica. Sin él, el framework no sabría qué mostrar al usuario.
+
+19. ¿Para que sirve el componente Link?
+Sirve para crear enlaces de navegación entre páginas de Next.js sin recargar la página completa, mejorando el rendimiento mediante precarga (prefetch) y navegación del lado del cliente.
+
+20. ¿Que se carga cuando usamos <a> y que cuando se usa <link> ?
+Con `<a>` se carga una nueva página HTML completa (recarga total). Con `<Link>` de Next.js se carga solo el contenido necesario (navegación del lado del cliente, sin recarga completa).
+
+21. ¿Investiga que es un Hook?
+Un Hook es una función especial de React que permite usar estado y otras características de React en componentes funcionales. Ejemplos: `useState`, `useEffect`, `usePathname`.
+
+22. ¿Que hooks usa Midu?
+En el curso, Midu usa `usePathname` (de Next.js) para obtener la ruta actual y `clsx` (no es un hook, es una librería) para clases condicionales.
+
+23. ¿Por que ocurre el siguiente error?
+Este error ocurre porque estás usando un hook de React (usePathname) en un componente que Next.js trata como Server Component (componente del servidor).
+
+Por defecto, todos los componentes en Next.js son Server Components a menos que se indique lo contrario. 
+Los Server Components no pueden usar hooks como usePathname, useState, useEffect, etc., porque estos hooks requieren interactividad del lado del cliente.
+Solo debes agregar 'use client' como primera línea en el archivo donde usas usePathname.
+
+24. ¿Es posible ejecutar los componentes de react en el cliente y el servidor?
+Sí, Next.js permite ejecutar componentes tanto en el servidor (por defecto) como en el cliente (usando la directiva `'use client'`).
+
+25 ¿Que es el code splitting?
+Es una técnica que divide el código de la aplicación en fragmentos más pequeños (chunks) que se cargan bajo demanda. Next.js lo aplica automáticamente por ruta, evitando que el navegador cargue todo el código de una vez.
+
